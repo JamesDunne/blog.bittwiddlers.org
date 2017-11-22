@@ -7,13 +7,10 @@ tags: []
 title: Doom Classic with 24bpp lighting
 ---
 It's been a while since I pulled an all-night coding binge, but last night
-that counter was reset to zero. The [fruits of that labor](https://github.com
-/id-Software/DOOM-3-BFG/pull/2) are a modestly improved look to the Doom
+that counter was reset to zero. The [fruits of that labor](https://github.com/id-Software/DOOM-3-BFG/pull/2) are a modestly improved look to the Doom
 Classic modes under the Doom 3 BFG edition which was recently open-sourced.
 Here's a before/after screenshot pair demonstrating the improved colors for
-lighting (click for full view): [![](http://bittwiddlers.org/wp-
-content/uploads/2012/11/8bpp-vs-24bpp-1024x364.png)](http://bittwiddlers.org
-/wp-content/uploads/2012/11/8bpp-vs-24bpp.png) It takes a keen eye to spot
+lighting (click for full view): [![](/images/2012/11/8bpp-vs-24bpp-1024x364.png)](/images/2012/11/8bpp-vs-24bpp.png) It takes a keen eye to spot
 some differences, but the effect should be apparent overall while playing the
 game for an extended period of time, especially while visiting darker areas
 in-game. Take a close look at the entryway on the left side and also at the
