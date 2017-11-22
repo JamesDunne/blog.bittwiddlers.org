@@ -1,0 +1,9 @@
+---
+baseurl: http://bittwiddlers.org
+languageCode: en-US
+params:
+  Author: James Dunne
+  AuthorEmail: james.jdunne@gmail.com
+  Description: It's not magic
+title: A gross misuse of the fabric of space-time
+theme: after-dark

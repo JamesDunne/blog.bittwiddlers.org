@@ -1,0 +1,144 @@
+---
+author: jaymz
+categories:
+- Uncategorized
+date: '2009-12-15T22:04:12'
+tags: []
+title: Strongly-typed Identifiers and T4 Templates
+---
+I would like to share with you a Visual Studio T4 template I use to generate
+strongly-typed identifiers for my domain models. These strongly-typed
+identifiers are glorified `int` wrappers. When designing your domain models
+you should choose to store references as strongly-typed identifiers because it
+exposes yet another layer of abstraction. Your domain models should never have
+to know if they reference one another with `int`, `long`, `string`, `Guid`, or
+any of the other myriad of identifier types commonly used. They should only be
+concerned with whether the identifiers represent are equal values. Having a
+centralized and well-named type to represent an identifier provides many other
+benefits than just abstraction and separation of concerns. It gives you the
+ability to have the compiler do some enforcement on your implementation code.
+I'm sure you've run into a few bugs where you're dealing with model
+identifiers close in name where you might be confused and accidentally
+copy/paste code expecting one range of identifiers into a new method that
+should have expected a different range of identifiers. These two distinct
+identifier ranges are both represented as `int`s in your code and your
+compiler would never tell you since the error is a semantic one, not a
+syntactic one. Creating strongly-typed wrappers for these different identifier
+ranges now makes the problem a syntactic one that your compiler can check for
+you. Furthermore, you get benefits of method overloading whereas you couldn't
+before when using the primitive types like `int`. In case you're wondering,
+there are implicit conversion operators to and from `int` defined on the
+template. This makes it easy to construct a strongly typed identifier from an
+integer constant for testing purposes or perhaps to create one from external
+data sources where the identifier is represented as an `int`. For example,
+ASP.NET MVC allows one to define public action methods with virtually any set
+of typed parameters and it will attempt to convert HTTP form and query-string
+values from their `string` representation into the types exposed by the
+method's parameters. ` `
+
+    
+    
+    public class MyController : Controller
+    {
+      public ActionResult GetMyObject(int id)
+      {
+        // Convert the `int` id parameter from the route into a `MyObjectID` using the
+        // implicit int conversion operator defined on `MyObjectID` struct:
+        MyObjectID objid = (MyObjectID)id;
+    
+        // Example code to instantiate a default implementation of our
+        // earlier-defined `IMyObjectRepository` interface:
+        IMyObjectRepository repo = new MyObjectRepositoryDefaultImpl();
+        MyObject myObj = repo.GetMyObject(objid);
+    
+        // We intend to display a view named "GetMyObject" providing a `MyObject` view model type:
+        return View((object)myObj);
+      }
+    }
+
+` ` The template can and should be extended to allow customization of base
+identifier type that the strongly-typed identifier wraps rather than just
+assuming `int` for all. As it is, all my models come from a data schema which
+uses `int` for identity values so it's fine with me. ` `
+
+    
+    
+    <#@ template language="C#v3.5" debug="True" hostspecific="True" #>
+    <#@ output extension=".generated.cs" #>
+    <#
+        // This .tt file is a T4 template. T4 is a code-generation template language implemented by
+        // Visual Studio and used for simplistic code-generation scenarios like this.
+    
+        // The pattern implemented here is to give each model identifier a strongly typed container for
+        // its underlying primitive type value. This way, methods can be overloaded based on identifier type
+        // and bugs involving the wrong identifier used with a method call can hopefully be reduced.
+    
+        // Unfortunately, there's no better way to define each of these identifier structs other
+        // than code-generating them. A base class, or any other means of code sharing, would not
+        // help since it would defeat the purpose of keeping the identifiers orthogonal and hence
+        // non-convertible to each other.
+    
+        // Add new identifier names here to be auto-generated using the same boilerplate code:
+        // The columns are "ClassName", "BasePrimitiveType", "XMLSummary".
+        var idNames = new[] {
+            new string[3] { "AbcModelID", "int", "A unique identifer for a Abc model" },
+            new string[3] { "XyzModelID", "int", "A unique identifier for a Xyz model" },
+            new string[3] { "EventInstanceID", "Guid", "A unique identifier for a unique instance of an event" },
+            // add more identifier definitions here...
+        };
+    #>
+    // WARNING: This code is auto-generated by Identifiers.tt T4 template. Any modifications made to
+    // this file will be rendered ineffective as it will be code-generated at build time anyway.
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    
+    namespace Your.Namespace.Here
+    {
+    <#
+        for (int i = 0; i < idNames.Length; ++i)
+        {
+            string idName = idNames[i][0];
+            string idType = idNames[i][1];
+            string comment = idNames[i][2];
+    #>
+        #region <#= idName #>
+    
+        ///
+        /// <#= comment #>
+        ///
+        ///
+        /// This type is explicitly convertible to int and vice versa using the (int) cast operator.
+        /// For example, <#= idName #> id = (<#= idName #>)10; int value = (int)id;
+        ///
+        [Serializable]
+        public struct <#= idName #> : IEquatable<<#= idName #>>
+        {
+            <#= idType #> _value;
+    
+            public <#= idName #>(<#= idType #> value) { this._value = value; }
+            public static explicit operator <#= idType #>(<#= idName #> id) { return id._value; }
+            public static explicit operator <#= idName #>(<#= idType #> value) { return new <#= idName #>(value); }
+            public static bool operator ==(<#= idName #> a, <#= idName #> b) { return a._value == b._value; }
+            public static bool operator !=(<#= idName #> a, <#= idName #> b) { return a._value != b._value; }
+    
+            public override string ToString() { return _value.ToString(); }
+            public override int GetHashCode() { return _value.GetHashCode(); }
+            public override bool Equals(object obj)
+            {
+                if (obj == null) return false;
+                if (obj.GetType() != typeof(<#= idName #>)) return false;
+                return this.Equals((<#= idName #>)obj);
+            }
+            public bool Equals(<#= idName #> other) { return _value.Equals(other._value); }
+        }
+    
+        #endregion
+    <#
+            if (i < idNames.Length - 1) WriteLine(String.Empty);
+        }
+    #>
+    }
+
+` `
