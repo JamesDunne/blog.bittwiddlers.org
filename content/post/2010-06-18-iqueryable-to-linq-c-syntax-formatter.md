@@ -39,4 +39,4 @@ This class is intended primarily for display purposes. It should not be used
 in its current state for attempting to write out compilable C# LINQ syntax.
 Download the code:
 
-  * [2010-06-18-LinqSyntaxExpressionFormatter](http://bittwiddlers.org/wp-content/uploads/2010/06/2010-06-18-LinqSyntaxExpressionFormatter.zip)
+  * [2010-06-18-LinqSyntaxExpressionFormatter](/images/2010/06/2010-06-18-LinqSyntaxExpressionFormatter.zip)

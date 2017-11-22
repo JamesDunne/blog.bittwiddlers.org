@@ -6,7 +6,7 @@ date: '2010-05-12T12:53:20'
 tags: []
 title: Algorithmic Test for Senior Software Engineers
 ---
-<a href="http://bittwiddlers.org/wp-content/uploads/2010/05/g2p1.png"><img class="alignnone size-full wp-image-88" title="Algorithm Test" src="http://bittwiddlers.org/wp-content/uploads/2010/05/g2p1.png" alt="" width="786" height="476" /></a>
+<a href="/images/2010/05/g2p1.png"><img class="alignnone size-full wp-image-88" title="Algorithm Test" src="/images/2010/05/g2p1.png" alt="" width="786" height="476" /></a>
 
 Having had enough of the tired old "ask a question get an answer" interview tactics, I decided to put together a test bed application to test the interviewee's real-world problem solving skills. Based on feedback from other team members, I did not actually force this upon on any of our recent interviewees.
 
@@ -36,6 +36,6 @@ If you are planning to use this test, be aware of cheating. Have the candidate e
 
 Download here:
 <ul>
-	<li><a href="http://bittwiddlers.org/wp-content/uploads/2010/05/B2P-20100520-Interviewee.zip">B2P-20100520-Interviewee</a> copy to give the interviewee candidate</li>
-	<li><a href="http://bittwiddlers.org/wp-content/uploads/2010/05/B2P-20100520-InterviewerAnswerKey.zip">B2P-20100520-InterviewerAnswerKey</a> copy to keep for yourself - includes sample solution code</li>
+	<li><a href="/images/2010/05/B2P-20100520-Interviewee.zip">B2P-20100520-Interviewee</a> copy to give the interviewee candidate</li>
+	<li><a href="/images/2010/05/B2P-20100520-InterviewerAnswerKey.zip">B2P-20100520-InterviewerAnswerKey</a> copy to keep for yourself - includes sample solution code</li>
 </ul>

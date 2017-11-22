@@ -8,7 +8,7 @@ title: Asynchronous Call Helper
 ---
 Have you ever gotten lost in all your BeginInvoke, EndInvoke, callback delegates, and IAsyncResults using the .NET Asynchronous Invocation Pattern?  Is it just too much code to write in order to execute a simple task?  Is there a better way?  Yes.<!--more-->To solve this little problem and also to help me write more efficient,
 scalable, and _readable_ server-side code I created the handy wrapper/helper
-class [AsyncHelper.cs](http://bittwiddlers.org/wp-content/uploads/2008/10/asynchelper.cs "AsyncHelper"). **NOTE:** The default
+class [AsyncHelper.cs](/images/2008/10/asynchelper.cs "AsyncHelper"). **NOTE:** The default
 configuration of the class depends on Mike Woodring's custom
 [ThreadPool](http://www.bearcanyon.com/dotnet/#threadpool). It can easily be
 switched to use the default .NET framework System.Threading.ThreadPool by
